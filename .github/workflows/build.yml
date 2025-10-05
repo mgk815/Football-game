@@ -28,12 +28,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build with PyInstaller
-        run: python -m PyInstaller --onefile --windowed --icon="panthers_logo.ico" \
-              --add-data "goal_ping.mp3;." \
-              --add-data "panthers_field.webp;." \
-              --add-data "panthers_logo.png;." \
-              --add-data "samuel_surprised.jpg;." Lane_Bday_Gift.py
+        run: python -m PyInstaller --onefile --windowed --icon="panthers_logo.ico" --add-data "goal_ping.mp3;." --add-data "panthers_field.webp;." --add-data "panthers_logo.png;." --add-data "samuel_surprised.jpg;." Lane_Bday_Gift.py
         shell: pwsh
+
 
 
 
