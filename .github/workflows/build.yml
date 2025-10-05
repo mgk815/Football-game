@@ -36,7 +36,8 @@ jobs:
           if [ "$RUNNER_OS" == "Windows" ]; then
             python -m PyInstaller --onefile --windowed --icon="panthers_logo.ico" --add-data "goal_ping.mp3;." --add-data "panthers_field.webp;." --add-data "panthers_logo.png;." --add-data "samuel_surprised.jpg;." Lane_Bday_Gift.py
           else
-            python3 -m PyInstaller --onefile --windowed --icon="panthers_logo.icns" --add-data "goal_ping.mp3:." --add-data "panthers_field.webp:." --add-data "panthers_logo.png:." --add-data "samuel_surprised.jpg:." Lane_Bday_Gift.py
+            source venv/bin/activate
+            python -m PyInstaller --onefile --windowed --icon="panthers_logo.icns" --add-data "goal_ping.mp3:." --add-data "panthers_field.webp:." --add-data "panthers_logo.png:." --add-data "samuel_surprised.jpg:." Lane_Bday_Gift.py
           fi
         shell: bash
 
