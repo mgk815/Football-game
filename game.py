@@ -8,6 +8,11 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Lane's Birthday Game")
 clock = pygame.time.Clock()
 
+icon = pygame.image.load("panthers_logo.png").convert_alpha()  # use convert_alpha for transparency
+
+# Set it as the window icon
+pygame.display.set_icon(icon)
+
 # Colors
 PANTHERS_BLUE = (0, 133, 202)
 GOLD = (255, 215, 0)
