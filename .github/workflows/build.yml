@@ -1,0 +1,41 @@
+name: Build Lane's Birthday Game
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install pyinstaller -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            python -m PyInstaller --onefile --windowed --icon="panthers_logo.ico" --add-data "goal_ping.mp3;." --add-data "panthers_field.webp;." --add-data "panthers_logo.png;." --add-data "samuel_surprised.jpg;." Lane_Bday_Gift.py
+          else
+            python3 -m PyInstaller --onefile --windowed --icon="panthers_logo.icns" --add-data "goal_ping.mp3:." --add-data "panthers_field.webp:." --add-data "panthers_logo.png:." --add-data "samuel_surprised.jpg:." Lane_Bday_Gift.py
+          fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lane_Bday_Gift-${{ matrix.os }}
+          path: dist/
