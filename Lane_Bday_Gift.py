@@ -1,4 +1,4 @@
-import pygame, sys, math, random, time
+import pygame, sys, math, random, time, os, sys
 
 pygame.init()
 pygame.mixer.init()
@@ -8,7 +8,21 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Lane's Birthday Game")
 clock = pygame.time.Clock()
 
-icon = pygame.image.load("panthers_logo.png").convert_alpha()  # use convert_alpha for transparency
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller."""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+menu_bg = pygame.image.load(resource_path("samuel_surprised.jpg")).convert()
+gameover_bg = pygame.image.load(resource_path("samuel_surprised.jpg")).convert()
+game_bg = pygame.image.load(resource_path("panthers_field.webp")).convert()
+goal_sound = pygame.mixer.Sound(resource_path("goal_ping.mp3"))
+icon = pygame.image.load(resource_path("panthers_logo.png")).convert_alpha()
+
 
 # Set it as the window icon
 pygame.display.set_icon(icon)
@@ -20,18 +34,11 @@ WHITE = (255, 255, 255)
 BROWN = (139, 69, 19)
 BLACK = (0, 0, 0)
 
-# --- load images at the top ---
-menu_bg = pygame.image.load("samuel_surprised.jpg").convert()
-gameover_bg = pygame.image.load("samuel_surprised.jpg").convert()
-game_bg = pygame.image.load("panthers_field.webp").convert()
-
 # optional: scale to current window size
 menu_bg = pygame.transform.scale(menu_bg, (WIDTH, HEIGHT))
 gameover_bg = pygame.transform.scale(gameover_bg, (WIDTH, HEIGHT))
 game_bg = pygame.transform.scale(game_bg, (WIDTH, HEIGHT))
 
-#sound file
-goal_sound = pygame.mixer.Sound("goal_ping.mp3")  # replace with your sound file
 
 # Game settings
 game_state = "menu"  # can be 'menu', 'playing', 'gameover'
@@ -60,6 +67,7 @@ goal_speed_y = random.choice([-2, 2])
 score = 0
 font = pygame.font.SysFont(None, 60)
 small_font = pygame.font.SysFont(None, 40)
+
 
 def reset_ball():
     global ball_x, ball_y, kicked, ball_vx, ball_vy, power, angle
